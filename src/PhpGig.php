@@ -61,6 +61,10 @@ class PhpGig {
         return $this->_getUserStarred();
     }
 
+    public function getUserSubscriptions() {
+        return $this->_getUserSubscriptions();
+    }
+
     private function _getUserInfo() {
         $context = stream_context_create(array('http' => array(
             'method' => 'GET',
@@ -103,6 +107,15 @@ class PhpGig {
             'header' => 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
         )));
         $response_json_str = file_get_contents($this->url . '/starred', false, $context);
+        return json_decode($response_json_str, true);
+    }
+
+    private function _getUserSubscriptions() {
+        $context = stream_context_create(array('http' => array(
+            'method' => 'GET',
+            'header' => 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+        )));
+        $response_json_str = file_get_contents($this->url . '/subscriptions', false, $context);
         return json_decode($response_json_str, true);
     }
 
