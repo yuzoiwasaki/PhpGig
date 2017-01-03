@@ -53,6 +53,14 @@ class PhpGig {
         return $user_info['bio'];
     }
 
+    public function getUserRepos() {
+        return $this->_getUserRepos();
+    }
+
+    public function getUserStarred() {
+        return $this->_getUserStarred();
+    }
+
     private function _getUserInfo() {
         $context = stream_context_create(array('http' => array(
             'method' => 'GET',
@@ -79,4 +87,23 @@ class PhpGig {
         $response_json_str = file_get_contents($this->url . '/following', false, $context);
         return json_decode($response_json_str, true);
     }
+
+    private function _getUserRepos() {
+        $context = stream_context_create(array('http' => array(
+            'method' => 'GET',
+            'header' => 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+        )));
+        $response_json_str = file_get_contents($this->url . '/repos', false, $context);
+        return json_decode($response_json_str, true);
+    }
+
+    private function _getUserStarred() {
+        $context = stream_context_create(array('http' => array(
+            'method' => 'GET',
+            'header' => 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+        )));
+        $response_json_str = file_get_contents($this->url . '/starred', false, $context);
+        return json_decode($response_json_str, true);
+    }
+
 }
