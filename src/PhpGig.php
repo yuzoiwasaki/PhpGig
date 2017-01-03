@@ -21,13 +21,11 @@ class PhpGig {
     }
 
     public function getUserFollowers() {
-        $user_info = $this->_getUserInfo();
-        return $user_info['followers_url'];
+        return $this->_getUserFollowers();
     }
 
-    public function getUserFollowings() {
-        $user_info = $this->_getUserInfo();
-        return $user_info['following_url'];
+    public function getUserFollowing() {
+        return $this->_getUserFollowing();
     }
 
     public function getUserName() {
@@ -64,4 +62,21 @@ class PhpGig {
         return json_decode($response_json_str, true);
     }
 
+    private function _getUserFollowers() {
+        $context = stream_context_create(array('http' => array(
+            'method' => 'GET',
+            'header' => 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+        )));
+        $response_json_str = file_get_contents($this->url . '/followers', false, $context);
+        return json_decode($response_json_str, true);
+    }
+
+    private function _getUserFollowing() {
+        $context = stream_context_create(array('http' => array(
+            'method' => 'GET',
+            'header' => 'User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+        )));
+        $response_json_str = file_get_contents($this->url . '/following', false, $context);
+        return json_decode($response_json_str, true);
+    }
 }
