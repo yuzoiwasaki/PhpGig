@@ -2,8 +2,12 @@
 
 namespace Yuzoiwasaki\PhpGig;
 
+/**
+ * GitHubのユーザー情報を取得するライブラリです
+ * Class PhpGig
+ * @package Yuzoiwasaki\PhpGig
+ */
 class PhpGig {
-
     private $USER_NAME;
 
     public function __construct($USER_NAME) {
@@ -131,5 +135,4 @@ class PhpGig {
         $response_json_str = file_get_contents($this->url . '/orgs', false, $context);
         return json_decode($response_json_str, true);
     }
-
 }
